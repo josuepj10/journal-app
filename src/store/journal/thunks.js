@@ -73,7 +73,7 @@ export const startDeletingNote = (id) => {
 
         const { uid } = getState().auth; //<-- Obtiene el uid del usuario, que viene del estado de auth
         const { active:note } = getState().journal; //<-- Obtiene la nota activa del estado de journal
-        // console.log({uid, note});
+        console.log({uid, note});
 
         const docRef = doc(FirebaseDB, `${uid}/journal/notes/${ note.id }`); //<-- Accede a la base de datos a la colección de notas del usuario
         await deleteDoc( docRef ); //<-- Elimina el documento de la base de datos

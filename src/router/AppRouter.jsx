@@ -3,6 +3,7 @@ import { AuthRoutes } from "../auth/routes/AuthRoutes";
 import { JournalRoutes } from "../journal/routes/JournalRoutes";
 import { CheckingAuth } from "../ui";
 import { useCheckAuth } from "../hooks";
+import PublicNotePage from "../journal/pages/PublicNotePage";
 
 export const AppRouter = () => {
 
@@ -20,6 +21,9 @@ export const AppRouter = () => {
         ? <Route path="/*" element={ < JournalRoutes /> } /> //<-- Si el estado es 'authenticated' se muestra el componente JournalRoutes
         : <Route path="/auth/*" element={ < AuthRoutes /> } /> //<-- Si el estado es 'unauthenticated' se muestra el componente AuthRoutes
       }
+
+       {/* Ruta para notas públicas */}
+       <Route path="/public/:noteName" element={<PublicNotePage />} />
 
       <Route path="/*" element={ <Navigate to= '/auth/login' />} /> 
       

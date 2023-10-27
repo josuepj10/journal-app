@@ -7,9 +7,12 @@ import { useEffect, useMemo } from "react"
 import { setActiveNote, startDeletingNote, startSaveNote } from "../../store/journal"
 import Swal from "sweetalert2"
 import 'sweetalert2/dist/sweetalert2.css'
+import { Link, useNavigate } from 'react-router-dom';
 
 export const NoteView = () => {
 
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch(); //<-- useDispatch para despachar la accion de la nota activa
 
@@ -61,76 +64,83 @@ export const NoteView = () => {
     });
 }
 
+const handlePrintNoteName = () => {
+  console.log("Nombre de la Nota:", title);
+};
+
+
 
   return (
-   
-    <Grid container direction='row' justifyContent='space-between' sx={{mb:1}} className="animate__animated animate__fadeIn animate__faster">
-    
-    <Grid item>
-        <Typography fontSize={ 39 } fontWeight='light'>
-         { dateString }
-        </Typography>
-    </Grid>
-
-    <Grid item>
-    <Button
-    disabled={ isSaving }
-    onClick={ onSaveNote }
-     color="primary" 
-     sx={{ padding:2 }}
-     >
-    <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
-     Guadar
-    </Button>
-    </Grid>
-
-    <Grid container>
-
-     <TextField 
-     type="text"
-     variant="filled"
-     fullWidth
-     placeholder="Ingrese un titulo"
-     label="Titulo"
-     sx={{ mb: 1, border: 'none' }}
-     name="title"
-     value={ title }
-     onChange={ onInputChange }
-     />
-
-     <TextField 
-     type="text"
-     variant="filled"
-     fullWidth
-     multiline
-     placeholder="Que sucedio hoy?"
-     minRows={ 5 }
-     name="body"
-    value={ body }
-    onChange={ onInputChange }
-     />
-    </Grid>
-
-    <Grid container justifyContent='end'>
-
-    <Button
-    onClick={ onDelete }
-    sx={{ mt:2 }}
-    color="error"
+    <Grid
+      container
+      direction="row"
+      justifyContent="space-between"
+      sx={{ mb: 1 }}
+      className="animate__animated animate__fadeIn animate__faster"
     >
+      <Grid item>
+        <Typography fontSize={39} fontWeight="light">
+          {dateString}
+        </Typography>
+      </Grid>
 
-    <DeleteOutline />
-    Borrar
+      <Grid item>
+        <Button
+          disabled={isSaving}
+          onClick={onSaveNote}
+          color="primary"
+          sx={{ padding: 2 }}
+        >
+          <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
+          Guadar
+        </Button>
+      </Grid>
 
-    </Button>
+      <Grid container>
+        <TextField
+          type="text"
+          variant="filled"
+          fullWidth
+          placeholder="Ingrese un titulo"
+          label="Titulo"
+          sx={{ mb: 1, border: "none" }}
+          name="title"
+          value={title}
+          onChange={onInputChange}
+        />
 
+        <TextField
+          type="text"
+          variant="filled"
+          fullWidth
+          multiline
+          placeholder="Que sucedio hoy?"
+          minRows={5}
+          name="body"
+          value={body}
+          onChange={onInputChange}
+        />
+      </Grid>
+
+      <Grid container justifyContent="end">
+        <Button onClick={onDelete} sx={{ mt: 2 }} color="error">
+          <DeleteOutline />
+          Borrar
+        </Button>
+
+        <Button onClick={handlePrintNoteName} sx={{ mt: 2 }} color="primary">
+          Imprimir Nombre de la Nota
+        </Button>
+      </Grid>
+
+      <Link to={`/public/${title}`} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', color: 'inherit' }}>
+          <Button sx={{ mt: 2, ml: 1 }} color="primary">
+            Ver Pública
+          </Button>
+        </Link>
+
+      {/* Image gallery */}
+      {/* <ImageGallery /> */}
     </Grid>
-
-    {/* Image gallery */}
-    {/* <ImageGallery /> */}
-    
-    </Grid>
-
-
-  )
+  );
 }
